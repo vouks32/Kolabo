@@ -39,7 +39,7 @@ export default function Header() {
       <View style={styles.header}>
         <Text style={styles.logo}>KOLABO</Text>
         
-       {/* <View style={styles.nav}>
+        <View style={styles.nav}>
           <TouchableOpacity style={styles.navItem}>
             <Text style={styles.navText}>Fonctionnalités</Text>
           </TouchableOpacity>
@@ -55,7 +55,7 @@ export default function Header() {
         </View>
           <TouchableOpacity style={[styles.ctaButton, styles.enterpriseButton]}>
             <Text style={styles.ctaButtonText}>Espace Entreprise</Text>
-          </TouchableOpacity>*/}
+          </TouchableOpacity>
 
         <View style={styles.ctaButtons}>
           <TouchableOpacity style={[styles.ctaButton, styles.creatorButton]}>
