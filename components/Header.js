@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   const isAndroid = /android/i.test(userAgent);
 
-export default function Header() {
+export default function Header({ navigation }) {
   const [scrollY] = useState(new Animated.Value(0));
   const [isTransparent, setIsTransparent] = useState(true);
 
@@ -13,6 +13,7 @@ export default function Header() {
     const listener = scrollY.addListener(({ value }) => {
       setIsTransparent(value < 50);
     });
+    console.log(isAndroid)
 
     return () => scrollY.removeListener(listener);
   }, []);
@@ -39,29 +40,21 @@ export default function Header() {
       <View style={styles.header}>
         <Text style={styles.logo}>KOLABO</Text>
         
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.navItem}>
+        {!isAndroid && <View style={styles.nav}>
+          <TouchableOpacity onPress={() => navigation.navigate('Fonctionalities')} style={styles.navItem}>
             <Text style={styles.navText}>Fonctionnalités</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
+          <TouchableOpacity onPress={() => navigation.navigate('HIW')} style={styles.navItem}>
             <Text style={styles.navText}>Comment ça marche</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <Text style={styles.navText}>Témoignages</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem}>
             <Text style={styles.navText}>Contact</Text>
           </TouchableOpacity>
-        </View>
+        </View>}
           <TouchableOpacity style={[styles.ctaButton, styles.enterpriseButton]}>
-            <Text style={styles.ctaButtonText}>Espace Entreprise</Text>
+            <Text style={styles.ctaButtonText}>Ouvrir L'application</Text>
           </TouchableOpacity>
 
-        <View style={styles.ctaButtons}>
-          <TouchableOpacity style={[styles.ctaButton, styles.creatorButton]}>
-            <Text style={[styles.ctaButtonText, styles.creatorButtonText]}>Ouvrir L'application</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );

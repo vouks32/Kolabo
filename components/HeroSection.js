@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, ImageBackg
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import hero from '../assets/images/hero.png'
-import { isAccessor } from 'typescript';
 
  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   const isAndroid = /android/i.test(userAgent);
@@ -99,6 +98,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 28,
     maxWidth: 600,
+    padding : 10
   },
   mockupContainer: {
     marginBottom: 48,

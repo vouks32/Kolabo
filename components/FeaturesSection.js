@@ -4,8 +4,8 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 
- const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  const isAndroid = /android/i.test(userAgent);
+const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+const isAndroid = /android/i.test(userAgent);
 const features = {
   entreprises: [
     {
@@ -58,14 +58,14 @@ export default function FeaturesSection() {
 
   return (
     <View style={styles.container}>
-      <Animated.View 
+      <Animated.View
         entering={FadeInUp.delay(200).duration(800)}
         style={styles.header}
       >
         <Text style={styles.title}>Votre pont vers le marketing d'influence</Text>
       </Animated.View>
 
-      <Animated.View 
+      <Animated.View
         entering={FadeInUp.delay(400).duration(800)}
         style={styles.tabContainer}
       >
@@ -87,22 +87,27 @@ export default function FeaturesSection() {
         </TouchableOpacity>
       </Animated.View>
 
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={  false}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.cardsContainer}
       >
         {features[activeTab].map((feature, index) => (
           <FeatureCard key={index} feature={feature} index={index} />
         ))}
       </ScrollView>
+      <View style={{ marginTop: 25, flexDirection: 'row', justifyContent: "center" }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Fonctionalities')} style={[styles.ctaButton, styles.enterpriseButton]}>
+          <Text style={styles.ctaButtonText}>Voir toutes les Fonctionalités</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 function FeatureCard({ feature, index }) {
   return (
-    <Animated.View 
+    <Animated.View
       entering={FadeInUp.delay(200 + index * 100).duration(600)}
       style={styles.cardWrapper}
     >
@@ -204,5 +209,25 @@ const styles = StyleSheet.create({
     color: '#E0E0E0',
     textAlign: 'center',
     lineHeight: 20,
+  },
+  ctaButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginLeft: 12,
+  },
+  enterpriseButton: {
+    backgroundColor: '#FF0050',
+  },
+  creatorButton: {
+    backgroundColor: '#00F2EA',
+  },
+  ctaButtonText: {
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  creatorButtonText: {
+    color: '#121212',
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, { FadeInUp, FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 const processSteps = [
@@ -26,7 +26,7 @@ const processSteps = [
 export default function ProcessSection() {
   return (
     <View style={styles.container}>
-      <Animated.View 
+      <Animated.View
         entering={FadeInUp.delay(200).duration(800)}
         style={styles.header}
       >
@@ -34,7 +34,7 @@ export default function ProcessSection() {
       </Animated.View>
 
       <View style={styles.timelineContainer}>
-        <Animated.View 
+        <Animated.View
           entering={FadeInLeft.delay(400).duration(800)}
           style={styles.entrepriseTimeline}
         >
@@ -63,7 +63,7 @@ export default function ProcessSection() {
           ))}
         </View>
 
-        <Animated.View 
+        <Animated.View
           entering={FadeInRight.delay(400).duration(800)}
           style={styles.createurTimeline}
         >
@@ -79,21 +79,27 @@ export default function ProcessSection() {
           ))}
         </Animated.View>
       </View>
+      <View style={{marginTop : 25, flexDirection : 'row', justifyContent : "center"}}>
+        <TouchableOpacity onPress={()=> navigation.navigate('HIW')} style={[styles.ctaButton, styles.enterpriseButton]}>
+          <Text style={styles.ctaButtonText}>Comment ça marche ?</Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }
 
 function ProcessStep({ step, text, index, isEntreprise }) {
   return (
-    <Animated.View 
+    <Animated.View
       entering={FadeInUp.delay(800 + index * 200).duration(600)}
       style={[styles.step, isEntreprise ? styles.entrepriseStep : styles.createurStep]}
     >
-      <View style={{width : 10, padding : 2, borderRadius : 10, backgroundColor : '#FF0050'}}></View>
+      <View style={{ width: 10, padding: 2, borderRadius: 10, backgroundColor: '#FF0050' }}></View>
       <View style={styles.stepNumber}>
         <Text style={styles.stepNumberText}>{step.id}</Text>
       </View>
-      <Text style={[styles.stepText, , isEntreprise ? {textAlign : "right"} :  {textAlign : "left"} ]}>{text}</Text>
+      <Text style={[styles.stepText, , isEntreprise ? { textAlign: "right" } : { textAlign: "left" }]}>{text}</Text>
     </Animated.View>
   );
 }
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
     width: 2,
     height: '100%',
     backgroundColor: '#FF0050',
-    top: 60,
+    top: 0,
   },
   centerStep: {
     width: 48,
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
     borderColor: '#FF0050',
-    marginBottom : 22,
+    marginBottom: 22,
   },
   centerIcon: {
     fontSize: 20,
@@ -194,5 +200,25 @@ const styles = StyleSheet.create({
     color: '#E0E0E0',
     maxWidth: 120,
     textAlign: 'center',
+  },
+  ctaButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginLeft: 12,
+  },
+  enterpriseButton: {
+    backgroundColor: '#FF0050',
+  },
+  creatorButton: {
+    backgroundColor: '#00F2EA',
+  },
+  ctaButtonText: {
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  creatorButtonText: {
+    color: '#121212',
   },
 });

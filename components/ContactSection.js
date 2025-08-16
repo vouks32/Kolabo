@@ -4,6 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { Picker } from '@react-native-picker/picker';
 
+ const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroid = /android/i.test(userAgent);
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     nom: '',
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   contentContainer: {
-    flexDirection: 'row',
+    flexDirection: isAndroid? "column" : 'row',
     gap: 48,
   },
   formContainer: {
@@ -204,6 +207,7 @@ const styles = StyleSheet.create({
   },
   contactInfo: {
     flex: 1,
+    marginTop : isAndroid? 40 : 0
   },
   contactTitle: {
     fontSize: 24,
