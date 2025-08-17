@@ -6,11 +6,14 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, ZoomIn } from 'react-native-reanimated';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
+const screenHeight = Dimensions.get('window').height
 
 const steps = [
   {
@@ -85,7 +88,7 @@ export default function HowItWorks({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, paddingBottom: 80 },
+  content: { padding: 20, maxHeight : screenHeight, paddingBottom: 80, paddingHorizontal : 50 },
   title: {
     fontSize: 28,
     fontWeight: '700',

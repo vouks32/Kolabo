@@ -41,14 +41,14 @@ export default function Header({ navigation }) {
         <Text style={styles.logo}>KOLABO</Text>
         
         {!isAndroid && <View style={styles.nav}>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>
+            <Text style={styles.navText}>Accueil</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Fonctionalities')} style={styles.navItem}>
             <Text style={styles.navText}>Fonctionnalités</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('HIW')} style={styles.navItem}>
             <Text style={styles.navText}>Comment ça marche</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem}>
-            <Text style={styles.navText}>Contact</Text>
           </TouchableOpacity>
         </View>}
           <TouchableOpacity style={[styles.ctaButton, styles.enterpriseButton]}>

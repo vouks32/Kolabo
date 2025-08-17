@@ -17,6 +17,9 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { BlurView } from 'expo-blur';
+
+const screenHeight = Dimensions.get('window').height
 
 const categories = {
   Businesses: [
@@ -136,26 +139,23 @@ export default function Fonctionalities({ navigation }) {
         {/* Cards animées - key forces remount/animation on tab change */}
         <View style={styles.cardsContainer} key={activeTab}>
           {categories[activeTab].map((f, i) => (
-            <TouchableOpacity key={i} activeOpacity={0.9}>
-              <Animated.View
+             <Animated.View
                 entering={FadeInUp.delay(200 + i * 120).springify()}
-                style={styles.cardWrapper}
-              >
-                <LinearGradient
-                  colors={['#FF0050', '#00F2EA']}
-                  style={styles.card}
+                  style={styles.cardWrapper}
                 >
-                  <Animated.Text
-                    style={styles.icon}
-                    entering={ZoomIn.delay(200 + i * 120)}
+                  <LinearGradient
+                    colors={['#FF0050aa', '#00F2EAaa']}
+                    style={styles.cardBorder}
                   >
-                    {f.icon}
-                  </Animated.Text>
-                  <Text style={styles.cardTitle}>{f.title}</Text>
-                  <Text style={styles.cardDescription}>{f.description}</Text>
-                </LinearGradient>
-              </Animated.View>
-            </TouchableOpacity>
+                    <BlurView intensity={20} tint="dark" style={styles.card}>
+                      <View style={styles.cardContent}>
+                        <Text style={styles.icon}>{f.icon}</Text>
+                        <Text style={styles.cardTitle}>{f.title}</Text>
+                        <Text style={styles.cardDescription}>{f.description}</Text>
+                      </View>
+                    </BlurView>
+                  </LinearGradient>
+                </Animated.View>
           ))}
         </View>
       </ScrollView>
@@ -165,7 +165,7 @@ export default function Fonctionalities({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, paddingBottom: 80 },
+  content: { padding: 20, maxHeight : screenHeight, paddingBottom: 80 },
   title: {
     fontSize: 28,
     fontWeight: '700',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     marginTop: 60,
   },
-  tabs: { flexDirection: 'row', justifyContent: 'center', marginBottom: 20 },
+  tabs: { alignSelf : "center", flexDirection: 'row', borderRadius : 10, justifyContent: 'center', marginBottom: 20, padding : 10, backgroundColor: '#1E1E1E', },
   tab: {
     padding: 10,
     marginHorizontal: 8,
@@ -189,14 +189,24 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  cardWrapper: { width: '75%', margin: 8, borderRadius: 18 },
-  card: {
-    borderRadius: 18,
-    padding: 18,
-    alignItems: 'center',
-    backgroundColor: '#1E1E1E',
+  cardWrapper: { width: '20%', margin: 8, borderRadius: 18 },
+  cardBorder: {
+    borderRadius: 16,
+    padding: 3,
   },
-  icon: { fontSize: 40, marginBottom: 12 },
+  card: {
+    borderRadius: 14,
+    overflow: 'hidden',
+    paddingVertical : 40,
+    alignItems : "center",
+    backgroundColor : "#1e1e1ed3"
+  },
+  icon: { 
+    fontSize: 40, 
+    marginBottom: 12, 
+    justifyContent : "center",
+    textAlign : 'center'
+  },
   cardTitle: {
     fontSize: 18,
     fontWeight: '700',

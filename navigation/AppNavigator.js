@@ -16,7 +16,7 @@ const AppNavigator = () => {
         headerTintColor: '#fff',
         headerTitleStyle: { fontWeight: 'bold' }
       }}
-      initialRouteName='Home'
+      initialRouteName='Fonctionalities'
     >
       <Stack.Screen
         name="Home"
