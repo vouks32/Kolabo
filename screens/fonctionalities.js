@@ -1,20 +1,22 @@
 // screens/FonctionalitiesScreen.js
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, { FadeInUp } from 'react-native-reanimated';
+import Animated, {
+  FadeInUp,
+  ZoomIn,
+  ZoomOut,
+  withSpring,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-
-const screenHeight = Dimensions.get('window').height;
 
 const categories = {
   Businesses: [
@@ -31,7 +33,7 @@ const categories = {
     },
     {
       icon: '📊',
-      title: 'Tableau de bord analytique',
+      title: 'Tableau de bord',
       description: 'KPIs en temps réel : vues, engagement, ROI.',
     },
     {
@@ -41,7 +43,7 @@ const categories = {
     },
     {
       icon: '🔐',
-      title: 'Paiement intégré',
+      title: 'Paiement sécurisé',
       description: 'Rechargez via Mobile Money ou carte bancaire.',
     },
   ],
@@ -64,13 +66,13 @@ const categories = {
     },
     {
       icon: '📈',
-      title: 'Calcul automatique des revenus',
+      title: 'Revenus auto',
       description: 'Estimation instantanée basée sur vos stats.',
     },
     {
       icon: '🔔',
-      title: 'Alertes campagnes',
-      description: 'Soyez notifié dès qu’une nouvelle opportunité est dispo.',
+      title: 'Alertes',
+      description: 'Soyez notifié dès qu’une opportunité apparaît.',
     },
   ],
   Transversales: [
@@ -81,13 +83,13 @@ const categories = {
     },
     {
       icon: '⭐',
-      title: 'Système de notation',
+      title: 'Notation',
       description: 'Évaluez et améliorez la qualité des collaborations.',
     },
     {
       icon: '🔎',
-      title: 'Moteur de recherche',
-      description: 'Trouvez les créateurs ou campagnes qui vous correspondent.',
+      title: 'Recherche avancée',
+      description: 'Trouvez les créateurs ou campagnes parfaites.',
     },
     {
       icon: '📞',
@@ -100,16 +102,16 @@ const categories = {
 export default function Fonctionalities({ navigation }) {
   const [activeTab, setActiveTab] = useState('Businesses');
 
+  // Trigger animation on tab change by using a key on the cards container
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.content}
-      >
-        <Text style={styles.title}>Toutes les Fonctionnalités</Text>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.title}>
+          ✨ Découvrez toutes nos fonctionnalités
+        </Text>
 
-        {/* Tabs */}
+        {/* Tabs avec animation */}
         <View style={styles.tabs}>
           {Object.keys(categories).map((cat) => (
             <TouchableOpacity
@@ -117,39 +119,45 @@ export default function Fonctionalities({ navigation }) {
               style={[styles.tab, activeTab === cat && styles.activeTab]}
               onPress={() => setActiveTab(cat)}
             >
-              <Text
+              <Animated.Text
+                entering={ZoomIn.springify().damping(12)}
+                exiting={ZoomOut}
                 style={[
                   styles.tabText,
                   activeTab === cat && styles.activeTabText,
                 ]}
               >
                 {cat}
-              </Text>
+              </Animated.Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Cards */}
-        <View style={styles.cardsContainer}>
+        {/* Cards animées - key forces remount/animation on tab change */}
+        <View style={styles.cardsContainer} key={activeTab}>
           {categories[activeTab].map((f, i) => (
-            <Animated.View
-              key={i}
-              entering={FadeInUp.delay(200 + i * 100).duration(600)}
-              style={styles.cardWrapper}
-            >
-              <LinearGradient
-                colors={['#FF0050', '#00F2EA']}
-                style={styles.card}
+            <TouchableOpacity key={i} activeOpacity={0.9}>
+              <Animated.View
+                entering={FadeInUp.delay(200 + i * 120).springify()}
+                style={styles.cardWrapper}
               >
-                <Text style={styles.icon}>{f.icon}</Text>
-                <Text style={styles.cardTitle}>{f.title}</Text>
-                <Text style={styles.cardDescription}>{f.description}</Text>
-              </LinearGradient>
-            </Animated.View>
+                <LinearGradient
+                  colors={['#FF0050', '#00F2EA']}
+                  style={styles.card}
+                >
+                  <Animated.Text
+                    style={styles.icon}
+                    entering={ZoomIn.delay(200 + i * 120)}
+                  >
+                    {f.icon}
+                  </Animated.Text>
+                  <Text style={styles.cardTitle}>{f.title}</Text>
+                  <Text style={styles.cardDescription}>{f.description}</Text>
+                </LinearGradient>
+              </Animated.View>
+            </TouchableOpacity>
           ))}
         </View>
-        {/* Toi meme tu vas decider si tu veux le footer ici ou non */}
-        {/* <Footer /> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -159,40 +167,42 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
   content: { padding: 20, paddingBottom: 80 },
   title: {
-    fontSize: 32,
-    fontWeight: '600',
+    fontSize: 28,
+    fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 20,
-    marginTop: 50,
+    marginBottom: 25,
+    marginTop: 60,
   },
   tabs: { flexDirection: 'row', justifyContent: 'center', marginBottom: 20 },
   tab: {
     padding: 10,
     marginHorizontal: 8,
-    borderRadius: 8,
+    borderRadius: 12,
     backgroundColor: '#1E1E1E',
   },
-  activeTab: { backgroundColor: '#FF0050' },
+  activeTab: { backgroundColor: '#FF0050', transform: [{ scale: 1.1 }] },
   tabText: { color: '#E0E0E0', fontSize: 16 },
-  activeTabText: { color: '#fff', fontWeight: '600' },
+  activeTabText: { color: '#fff', fontWeight: '700' },
   cardsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  cardWrapper: { width: '45%', margin: 8 },
-  card: { borderRadius: 16, padding: 16, alignItems: 'center' },
-  icon: { fontSize: 32, marginBottom: 12 },
+  cardWrapper: { width: '75%', margin: 8, borderRadius: 18 },
+  card: {
+    borderRadius: 18,
+    padding: 18,
+    alignItems: 'center',
+    backgroundColor: '#1E1E1E',
+  },
+  icon: { fontSize: 40, marginBottom: 12 },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#fff',
     marginBottom: 8,
     textAlign: 'center',
   },
   cardDescription: { fontSize: 14, color: '#E0E0E0', textAlign: 'center' },
-  scrollView: {
-    height: screenHeight,
-  },
 });
