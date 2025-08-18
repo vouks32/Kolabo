@@ -47,53 +47,64 @@ export default function HowItWorks({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>🚀 Comment ça marche ?</Text>
+        <View style={{ padding: 50, backgroundColor: '#121212' }}>
+          <Text style={styles.title}>🚀 Comment ça marche ?</Text>
 
-        {steps.map((s, i) => (
-          <TouchableOpacity
-            key={s.id}
-            activeOpacity={0.9}
-            onPress={() => setActiveStep(s.id)}
-          >
-            <Animated.View
-              entering={FadeInUp.delay(200 + i * 200).springify()}
-              style={[
-                styles.step,
-                activeStep === s.id && {
-                  backgroundColor: '#1E1E1E',
-                  borderColor: '#00F2EA',
-                  transform: [{ scale: 1.05 }],
-                },
-              ]}
+          {steps.map((s, i) => (
+            <TouchableOpacity
+              key={s.id}
+              activeOpacity={0.9}
+              onPress={() => setActiveStep(s.id)}
             >
               <Animated.View
-                entering={ZoomIn.delay(200 + i * 200)}
+                entering={FadeInUp.delay(200 + i * 200).springify()}
                 style={[
-                  styles.circle,
-                  activeStep === s.id && styles.circleActive,
+                  styles.step,
+                  activeStep === s.id && {
+                    backgroundColor: '#1E1E1E',
+                    borderColor: '#00F2EA',
+                    transform: [{ scale: 1.05 }],
+                  },
                 ]}
               >
-                <Text style={styles.circleText}>{s.id}</Text>
+                <Animated.View
+                  entering={ZoomIn.delay(200 + i * 200)}
+                  style={[
+                    styles.circle,
+                    activeStep === s.id && styles.circleActive,
+                  ]}
+                >
+                  <Text style={styles.circleText}>{s.id}</Text>
+                </Animated.View>
+                <View style={styles.stepContent}>
+                  <Text style={styles.stepTitle}>{s.title}</Text>
+                  <Text style={styles.stepDesc}>{s.desc}</Text>
+                </View>
               </Animated.View>
-              <View style={styles.stepContent}>
-                <Text style={styles.stepTitle}>{s.title}</Text>
-                <Text style={styles.stepDesc}>{s.desc}</Text>
-              </View>
-            </Animated.View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
 
+          <View style={{ marginTop: 25, flexDirection: 'row', justifyContent: "center" }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Fonctionalities')} style={[styles.ctaButton, styles.enterpriseButton]}>
+              <Text style={styles.ctaButtonText}>Voir toutes les Fonctionalités</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
         <ContactSection navigation={navigation} />
         <Footer />
-
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, maxHeight: screenHeight, paddingBottom: 80, paddingHorizontal: 50 },
+  container: {
+    flex: 1,
+    backgroundColor: '#121212',
+    height: screenHeight
+  },
+  content: { maxHeight: screenHeight, backgroundColor: '#121212' },
   title: {
     fontSize: 28,
     fontWeight: '700',
@@ -135,4 +146,18 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   stepDesc: { fontSize: 14, color: '#E0E0E0', lineHeight: 20 },
+  ctaButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginLeft: 12,
+  },
+  enterpriseButton: {
+    backgroundColor: '#FF0050',
+  },
+  ctaButtonText: {
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
 });

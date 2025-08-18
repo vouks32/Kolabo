@@ -45,6 +45,5 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     height : screenHeight,
-    backgroundColor : "#fff"
   },
 });

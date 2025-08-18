@@ -38,7 +38,9 @@ export default function Header({ navigation }) {
       </Animated.View>
       
       <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Text style={styles.logo}>KOLABO</Text>
+          </TouchableOpacity>
         
         {!isAndroid && <View style={styles.nav}>
           <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.navItem}>

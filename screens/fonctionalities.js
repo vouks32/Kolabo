@@ -112,53 +112,62 @@ export default function Fonctionalities({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>
-          ✨ Découvrez toutes nos fonctionnalités
-        </Text>
+        <View style={{ padding: 50, backgroundColor: '#121212' }}>
+          <Text style={styles.title}>
+            ✨ Découvrez toutes nos fonctionnalités
+          </Text>
 
-        {/* Tabs avec animation */}
-        <View style={styles.tabs}>
-          {Object.keys(categories).map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              style={[styles.tab, activeTab === cat && styles.activeTab]}
-              onPress={() => setActiveTab(cat)}
-            >
-              <Animated.Text
-                entering={ZoomIn.springify().damping(12)}
-                exiting={ZoomOut}
-                style={[
-                  styles.tabText,
-                  activeTab === cat && styles.activeTabText,
-                ]}
+          {/* Tabs avec animation */}
+          <View style={styles.tabs}>
+            {Object.keys(categories).map((cat) => (
+              <TouchableOpacity
+                key={cat}
+                style={[styles.tab, activeTab === cat && styles.activeTab]}
+                onPress={() => setActiveTab(cat)}
               >
-                {cat}
-              </Animated.Text>
+                <Animated.Text
+                  entering={ZoomIn.springify().damping(12)}
+                  exiting={ZoomOut}
+                  style={[
+                    styles.tabText,
+                    activeTab === cat && styles.activeTabText,
+                  ]}
+                >
+                  {cat}
+                </Animated.Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Cards animées - key forces remount/animation on tab change */}
+          <View style={styles.cardsContainer} key={activeTab}>
+            {categories[activeTab].map((f, i) => (
+              <Animated.View
+                entering={FadeInUp.delay(200 + i * 120).springify()}
+                style={styles.cardWrapper}
+              >
+                <LinearGradient
+                  colors={['#FF0050', '#00F2EA']}
+                  style={styles.cardBorder}
+                >
+                  <BlurView intensity={20} tint="dark" style={styles.card}>
+                    <View style={styles.cardContent}>
+                      <Text style={styles.icon}>{f.icon}</Text>
+                      <Text style={styles.cardTitle}>{f.title}</Text>
+                      <Text style={styles.cardDescription}>{f.description}</Text>
+                    </View>
+                  </BlurView>
+                </LinearGradient>
+              </Animated.View>
+            ))}
+          </View>
+
+          <View style={{ marginTop: 25, flexDirection: 'row', justifyContent: "center" }}>
+            <TouchableOpacity onPress={() => navigation.navigate('HIW')} style={[styles.ctaButton, styles.enterpriseButton]}>
+              <Text style={styles.ctaButtonText}>Comment ça marche ?</Text>
             </TouchableOpacity>
-          ))}
-        </View>
+          </View>
 
-        {/* Cards animées - key forces remount/animation on tab change */}
-        <View style={styles.cardsContainer} key={activeTab}>
-          {categories[activeTab].map((f, i) => (
-            <Animated.View
-              entering={FadeInUp.delay(200 + i * 120).springify()}
-              style={styles.cardWrapper}
-            >
-              <LinearGradient
-                colors={['#FF0050aa', '#00F2EAaa']}
-                style={styles.cardBorder}
-              >
-                <BlurView intensity={20} tint="dark" style={styles.card}>
-                  <View style={styles.cardContent}>
-                    <Text style={styles.icon}>{f.icon}</Text>
-                    <Text style={styles.cardTitle}>{f.title}</Text>
-                    <Text style={styles.cardDescription}>{f.description}</Text>
-                  </View>
-                </BlurView>
-              </LinearGradient>
-            </Animated.View>
-          ))}
         </View>
 
         <ContactSection navigation={navigation} />
@@ -170,8 +179,15 @@ export default function Fonctionalities({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, maxHeight: screenHeight, paddingBottom: 80 },
+  container: {
+    flex: 1,
+    backgroundColor: '#121212',
+    height: screenHeight
+  },
+  content: {
+    height: screenHeight,
+    backgroundColor: '#121212'
+  },
   title: {
     fontSize: 28,
     fontWeight: '700',
@@ -195,17 +211,26 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  cardWrapper: { width: '20%', margin: 8, borderRadius: 18 },
+  cardWrapper: {
+    marginHorizontal: 15,
+    marginVertical: 15,
+  },
   cardBorder: {
     borderRadius: 16,
-    padding: 3,
+    padding: 2,
   },
   card: {
+    width: 280,
+    height: 200,
     borderRadius: 14,
     overflow: 'hidden',
-    paddingVertical: 40,
-    alignItems: "center",
-    backgroundColor: "#1e1e1ed3"
+  },
+  cardContent: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(30, 30, 30, 0.7)',
   },
   icon: {
     fontSize: 40,
@@ -221,4 +246,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cardDescription: { fontSize: 14, color: '#E0E0E0', textAlign: 'center' },
+  ctaButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginLeft: 12,
+  },
+  enterpriseButton: {
+    backgroundColor: '#FF0050',
+  },
+  ctaButtonText: {
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
 });

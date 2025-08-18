@@ -15,7 +15,7 @@ const AppNavigator = () => {
         screenOptions={{
           headerStyle: { backgroundColor: '#121212' },
           headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold' }
+          headerTitleStyle: { fontWeight: 'bold' },
         }}
         initialRouteName='Home'
       >

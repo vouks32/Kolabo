@@ -219,15 +219,9 @@ const styles = StyleSheet.create({
   enterpriseButton: {
     backgroundColor: '#FF0050',
   },
-  creatorButton: {
-    backgroundColor: '#00F2EA',
-  },
   ctaButtonText: {
     fontSize: 19,
     fontWeight: '600',
     color: '#FFFFFF',
-  },
-  creatorButtonText: {
-    color: '#121212',
   },
 });
