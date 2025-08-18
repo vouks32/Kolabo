@@ -53,7 +53,7 @@ const features = {
   ]
 };
 
-export default function FeaturesSection() {
+export default function FeaturesSection({navigation}) {
   const [activeTab, setActiveTab] = useState('entreprises');
 
   return (

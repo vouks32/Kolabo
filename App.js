@@ -4,10 +4,21 @@ import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   //AsyncStorage.clear()
-  
+
+  const linking = {
+    prefixes: ['/'],
+    config: {
+      screens: {
+        Home: '',
+        HIW: 'How-it-works',
+        Fonctionalities: 'Fonctionalities',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
-        <AppNavigator />
+    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>} >
+      <AppNavigator />
     </NavigationContainer>
   );
 }

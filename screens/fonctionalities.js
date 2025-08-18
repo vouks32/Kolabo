@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, {
@@ -18,6 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { BlurView } from 'expo-blur';
+import ContactSection from '../components/ContactSection';
 
 const screenHeight = Dimensions.get('window').height
 
@@ -139,25 +141,29 @@ export default function Fonctionalities({ navigation }) {
         {/* Cards animées - key forces remount/animation on tab change */}
         <View style={styles.cardsContainer} key={activeTab}>
           {categories[activeTab].map((f, i) => (
-             <Animated.View
-                entering={FadeInUp.delay(200 + i * 120).springify()}
-                  style={styles.cardWrapper}
-                >
-                  <LinearGradient
-                    colors={['#FF0050aa', '#00F2EAaa']}
-                    style={styles.cardBorder}
-                  >
-                    <BlurView intensity={20} tint="dark" style={styles.card}>
-                      <View style={styles.cardContent}>
-                        <Text style={styles.icon}>{f.icon}</Text>
-                        <Text style={styles.cardTitle}>{f.title}</Text>
-                        <Text style={styles.cardDescription}>{f.description}</Text>
-                      </View>
-                    </BlurView>
-                  </LinearGradient>
-                </Animated.View>
+            <Animated.View
+              entering={FadeInUp.delay(200 + i * 120).springify()}
+              style={styles.cardWrapper}
+            >
+              <LinearGradient
+                colors={['#FF0050aa', '#00F2EAaa']}
+                style={styles.cardBorder}
+              >
+                <BlurView intensity={20} tint="dark" style={styles.card}>
+                  <View style={styles.cardContent}>
+                    <Text style={styles.icon}>{f.icon}</Text>
+                    <Text style={styles.cardTitle}>{f.title}</Text>
+                    <Text style={styles.cardDescription}>{f.description}</Text>
+                  </View>
+                </BlurView>
+              </LinearGradient>
+            </Animated.View>
           ))}
         </View>
+
+        <ContactSection navigation={navigation} />
+        <Footer />
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -165,7 +171,7 @@ export default function Fonctionalities({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, maxHeight : screenHeight, paddingBottom: 80 },
+  content: { padding: 20, maxHeight: screenHeight, paddingBottom: 80 },
   title: {
     fontSize: 28,
     fontWeight: '700',
@@ -174,7 +180,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     marginTop: 60,
   },
-  tabs: { alignSelf : "center", flexDirection: 'row', borderRadius : 10, justifyContent: 'center', marginBottom: 20, padding : 10, backgroundColor: '#1E1E1E', },
+  tabs: { alignSelf: "center", flexDirection: 'row', borderRadius: 10, justifyContent: 'center', marginBottom: 20, padding: 10, backgroundColor: '#1E1E1E', },
   tab: {
     padding: 10,
     marginHorizontal: 8,
@@ -197,15 +203,15 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 14,
     overflow: 'hidden',
-    paddingVertical : 40,
-    alignItems : "center",
-    backgroundColor : "#1e1e1ed3"
+    paddingVertical: 40,
+    alignItems: "center",
+    backgroundColor: "#1e1e1ed3"
   },
-  icon: { 
-    fontSize: 40, 
-    marginBottom: 12, 
-    justifyContent : "center",
-    textAlign : 'center'
+  icon: {
+    fontSize: 40,
+    marginBottom: 12,
+    justifyContent: "center",
+    textAlign: 'center'
   },
   cardTitle: {
     fontSize: 18,

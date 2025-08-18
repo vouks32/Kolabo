@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, ZoomIn } from 'react-native-reanimated';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import ContactSection from '../components/ContactSection';
 
 const screenHeight = Dimensions.get('window').height
 
@@ -81,6 +82,10 @@ export default function HowItWorks({ navigation }) {
             </Animated.View>
           </TouchableOpacity>
         ))}
+
+        <ContactSection navigation={navigation} />
+        <Footer />
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -88,7 +93,7 @@ export default function HowItWorks({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
-  content: { padding: 20, maxHeight : screenHeight, paddingBottom: 80, paddingHorizontal : 50 },
+  content: { padding: 20, maxHeight: screenHeight, paddingBottom: 80, paddingHorizontal: 50 },
   title: {
     fontSize: 28,
     fontWeight: '700',

@@ -23,7 +23,7 @@ const processSteps = [
   }
 ];
 
-export default function ProcessSection() {
+export default function ProcessSection({navigation}) {
   return (
     <View style={styles.container}>
       <Animated.View
